@@ -1,14 +1,14 @@
 <script setup>
-import AppSideBar from "./components/AppSideBar.vue"
+import AppSideBar from "./components/AppSideBar.vue";
 </script>
 
 <template>
   <div class="row">
-    <div class="col-2">
-        <AppSideBar />
+    <div style="width:280px">
+      <AppSideBar />
     </div>
-    <div class="col-10">
-      <div class="container" style="margin-left:2rem !important">
+    <div class="col">
+      <div class="container">
         <RouterView />
       </div>
     </div>
