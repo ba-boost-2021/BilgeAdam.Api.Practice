@@ -9,6 +9,7 @@ namespace BilgeAdam.Services.Extensions
         public static void AddDataServices(this IServiceCollection services)
         {
             services.AddScoped<ISupplierService, SupplierService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
             //services.AddScoped<ISupplierService, SupplierServiceForMongoDb>();
         }
     }

@@ -10,5 +10,6 @@ namespace BilgeAdam.Data.Context
         }
 
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Employee> Employees { get; set; }
     }
 }
