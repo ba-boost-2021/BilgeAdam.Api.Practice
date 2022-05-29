@@ -8,14 +8,20 @@
   <Transition>
     <div v-if="isFailed" class="alert alert-danger">İşlem Başarısız :(</div>
   </Transition>
-  <div
-    class="d-flex justify-content-center align-content-center"
-    style="min-height: 500px !important"
-  >
-    <div v-if="loading" class="spinner-grow text-primary" role="status">
-      <span class="sr-only">Loading...</span>
+  <div class="d-flex justify-content-end">
+    <button @click="newSupplier" class="btn btn-info btn-sm">
+      <i class="bi bi-plus"></i> Add New
+    </button>
+  </div>
+  <div style="min-height: 500px !important">
+    <div
+      v-if="loading"
+      style="min-height: 500px !important"
+      class="d-flex justify-content-center align-items-center"
+    >
+      <div class="spinner-grow text-primary" role="status"></div> <!--spinner-->
     </div>
-    <div v-if="!loading" class="table-responsive">
+    <div v-else class="table-responsive">
       <table class="table table-striped" style="font-size: 0.8rem">
         <thead class="thead-dark">
           <tr>
@@ -67,10 +73,12 @@
     </button>
   </div>
   <DeleteConfirm ref="deleteModal" @yes="deleteOk" />
+  <New ref="newModal" @success="newModalSuccess" />
 </template>
 <script>
 import axios from "axios";
 import DeleteConfirm from "../components/modals/DeleteConfirm.vue";
+import New from "./suppliers/New.vue";
 export default {
   data() {
     return {
@@ -86,6 +94,7 @@ export default {
   },
   components: {
     DeleteConfirm,
+    New,
   },
   mounted() {
     this.load();
@@ -111,9 +120,19 @@ export default {
           });
       }, 1000);
     },
+    newSupplier() {
+      this.$refs.newModal.open();
+    },
     deleteSupplier(id) {
       this.selectedId = id;
       this.$refs.deleteModal.open();
+    },
+    newModalSuccess() {
+      this.isSuccess = true;
+      this.load();
+      setTimeout(() => {
+        this.isSuccess = false;
+      }, 4000);
     },
     deleteOk() {
       axios
