@@ -1,11 +1,6 @@
 ﻿using BilgeAdam.Common.Dtos;
 using BilgeAdam.Data.Context;
 using BilgeAdam.Services.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BilgeAdam.Services.Concretes
 {
@@ -17,18 +12,19 @@ namespace BilgeAdam.Services.Concretes
         {
             this.dbContext = dbContext;
         }
+
         public PagedList<List<EmployeeListDto>> GetPagedEmployees(int count, int page)
         {
             var data = dbContext.Employees.Skip((page - 1) * count).Take(count).Select(x => new EmployeeListDto
             {
-                FirstName= x.FirstName,
-                 LastName = x.LastName,
-                  Id = x.EmployeeID,
-                   BirthDate = x.BirthDate ,
-                    Country = x.Country,
-                     City = x.City,
-                      HireDate = x.HireDate.Value,
-                       Title = x.Title
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Id = x.EmployeeID,
+                BirthDate = x.BirthDate,
+                Country = x.Country,
+                City = x.City,
+                HireDate = x.HireDate.Value,
+                Title = x.Title
             }).ToList();
             var totalCount = dbContext.Employees.Skip(page * count).Count();
             return new PagedList<List<EmployeeListDto>>() { Data = data, TotalCount = totalCount };

@@ -17,7 +17,7 @@ builder.Services.AddDbContext<NorthwindDbContext>(options =>
 {
     options.UseSqlServer(settings.Database.ConnectionString);
 });
-builder.Services.AddCors(option => { option.AddPolicy("all", p => { p.AllowAnyOrigin().AllowAnyHeader(); }); });
+builder.Services.AddCors(option => { option.AddPolicy("all", p => { p.AllowAnyMethod().AllowAnyOrigin().AllowAnyHeader(); }); });
 //builder.Services.AddCors(option => { option.AddPolicy("any", p => { p.WithOrigins("http://www.sergen.com").AllowAnyHeader(); }); });
 //Data Services
 builder.Services.AddDataServices();

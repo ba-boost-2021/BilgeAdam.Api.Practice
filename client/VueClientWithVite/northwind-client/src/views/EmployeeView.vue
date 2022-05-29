@@ -1,11 +1,11 @@
 <template>
   <div class="heading">
-    <h3>Tedarikçi Yönetim Paneli</h3>
+    <h3>Personel Yönetim Paneli</h3>
   </div>
   <div style="min-height: 500px !important">
     <div v-if="loading" class="alert alert-info">Yükleniyor...</div>
     <div v-else class="table-responsive">
-      <table class="table table-striped" style="font-size: 0.8rem">
+      <table class="table table-striped" style="font-size: 0.6rem">
         <thead class="thead-dark">
           <tr>
             <th scope="col">First Name</th>
@@ -22,8 +22,8 @@
             <td>{{ e.firstName }}</td>
             <td>{{ e.lastName }}</td>
             <td>{{ e.title }}</td>
-            <td>{{ e.hireDate }}</td>
-            <td>{{ e.birthDate }}</td>
+            <td>{{ formatDate(e.hireDate) }}</td>
+            <td>{{ formatDate(e.birthDate) }}</td>
             <td>{{ e.city }}</td>
             <td>{{ e.country }}</td>
           </tr>
@@ -51,6 +51,7 @@
 </template>
 <script>
 import axios from "axios";
+import {format, parseISO} from "date-fns";
 export default {
   data() {
     return {
@@ -98,6 +99,9 @@ export default {
         this.load();
       }
     },
+    formatDate(date){
+      return format(parseISO(date),"dd/MM/yyyy");
+    }
   },
 };
 </script>
