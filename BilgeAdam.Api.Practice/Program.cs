@@ -1,12 +1,8 @@
 using BilgeAdam.Api.Practice.Extensions;
 using BilgeAdam.Common;
 using BilgeAdam.Data.Context;
-using BilgeAdam.Services.Abstractions;
 using BilgeAdam.Services.Extensions;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var settings = builder.Configuration.GetSection("Settings").Get<Settings>();
@@ -44,12 +40,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-
-
-
-
-
 
 //TODO: Customer içim Create,Read,Update,Delete,List Actionlarýný tasarlayýn,
 //PostMan ile istekler atýp attýðýnýz istekleri export ederek projenize atýn

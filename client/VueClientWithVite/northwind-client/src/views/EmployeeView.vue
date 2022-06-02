@@ -50,7 +50,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 import {format, parseISO} from "date-fns";
 export default {
   data() {
@@ -69,16 +68,18 @@ export default {
     load() {
       this.loading = true;
       setTimeout(() => {
-        axios
+        this.$ajax
           .get(
-            `https://localhost:7000/api/employee/list?count=${this.count}&page=${this.page}`
+            `/api/employee/list?count=${this.count}&page=${this.page}`
           )
           .then((response) => {
             this.employees = response.data.data;
             this.totalCount = response.data.totalCount;
           })
           .catch((error) => {
-            //TODO: handle
+            if(error.response.status == 401){
+              this.$router.push("/login");
+            }
           })
           .finally(() => {
             this.loading = false;

@@ -40,7 +40,12 @@ namespace BilgeAdam.Api.Practice.Controllers
             var handler = new JwtSecurityTokenHandler();
             var token = handler.CreateToken(tokenDescriptor);
             var jwtToken = handler.WriteToken(token);
-            return Ok(jwtToken);
+            var result = new AuthenticationResult()
+            {
+                Token = jwtToken,
+                ExpireAt = DateTime.Now.AddMinutes(jwtSettings.Expires)
+            };
+            return Ok(result);
         }
     }
 }

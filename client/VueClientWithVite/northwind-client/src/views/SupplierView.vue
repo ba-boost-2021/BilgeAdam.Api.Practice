@@ -19,7 +19,8 @@
       style="min-height: 500px !important"
       class="d-flex justify-content-center align-items-center"
     >
-      <div class="spinner-grow text-primary" role="status"></div> <!--spinner-->
+      <div class="spinner-grow text-primary" role="status"></div>
+      <!--spinner-->
     </div>
     <div v-else class="table-responsive">
       <table class="table table-striped" style="font-size: 0.8rem">
@@ -76,7 +77,6 @@
   <New ref="newModal" @success="newModalSuccess" />
 </template>
 <script>
-import axios from "axios";
 import DeleteConfirm from "../components/modals/DeleteConfirm.vue";
 import New from "./suppliers/New.vue";
 export default {
@@ -103,16 +103,16 @@ export default {
     load() {
       this.loading = true;
       setTimeout(() => {
-        axios
-          .get(
-            `https://localhost:7000/api/supplier/list?count=${this.count}&page=${this.page}`
-          )
+        this.$ajax
+          .get(`/api/supplier/list?count=${this.count}&page=${this.page}`)
           .then((response) => {
             this.suppliers = response.data.data;
             this.totalCount = response.data.totalCount;
           })
           .catch((error) => {
-            //TODO: handle
+            if (error.response.status == 401) {
+              this.$router.push("/login");
+            }
           })
           .finally(() => {
             this.loading = false;

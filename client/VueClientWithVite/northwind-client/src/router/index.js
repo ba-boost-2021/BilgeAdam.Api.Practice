@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-
+import session from '../helpers/session'
+import { roundToNearestMinutes } from 'date-fns'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  linkActiveClass:'active',
+  linkActiveClass: 'active',
   routes: [
     {
       path: '/',
@@ -37,5 +38,20 @@ const router = createRouter({
     },
   ]
 })
+router.beforeEach((to, from, next, ) => {
+  if (to.name == "login") {
+    //TODO: login sayfasına gidememeli!
+    // if (session.isAuthenticated()) {
+    //   router.back();
+    // }
+    return next();
+  }
+  if (!session.isAuthenticated()) {
+    session.clear();
+    router.push("/login");
+  } else {
+    return next();
+  }
 
+})
 export default router

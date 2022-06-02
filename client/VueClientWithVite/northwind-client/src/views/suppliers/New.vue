@@ -139,7 +139,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 export default {
   emits: ["success"],
   data() {
@@ -176,8 +175,8 @@ export default {
         Phone: this.phone,
         Fax: this.fax,
       };
-      axios
-        .post("https://localhost:7000/api/supplier/add", data)
+      this.$ajax
+        .post("/api/supplier/add", data)
         .then((response) => {
           if (response) {
             this.instance.hide();
@@ -186,7 +185,11 @@ export default {
           }
         })
         .catch(() => {
-          this.hasError = true;
+          if (error.response.status == 401) {
+            this.$router.push("/login");
+          } else {
+            this.hasError = true;
+          }
         });
     },
     open() {
