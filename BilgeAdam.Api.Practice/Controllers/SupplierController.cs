@@ -1,11 +1,13 @@
 ﻿using BilgeAdam.Common.Dtos;
 using BilgeAdam.Services.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BilgeAdam.Api.Practice.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SupplierController : ControllerBase
     {
         private readonly ISupplierService service;
@@ -16,13 +18,14 @@ namespace BilgeAdam.Api.Practice.Controllers
         }
 
         [HttpGet("list")]
-        public IActionResult GetPagedSuppliers([FromQuery]int count, [FromQuery]int page)
+        public IActionResult GetPagedSuppliers([FromQuery] int count, [FromQuery] int page)
         {
-            var result = service.GetPagedSuppliers(count,page);
+            var result = service.GetPagedSuppliers(count, page);
             return Ok(result);
         }
+
         [HttpGet("get/{id}")]
-        public IActionResult GetById([FromRoute]int id)
+        public IActionResult GetById([FromRoute] int id)
         {
             var result = service.GetSupplierById(id);
             if (result is null)
@@ -31,6 +34,7 @@ namespace BilgeAdam.Api.Practice.Controllers
             }
             return Ok(result);
         }
+
         [HttpPost("add")]
         public IActionResult Create([FromBody] SupplierAddDto dto)
         {
@@ -41,8 +45,9 @@ namespace BilgeAdam.Api.Practice.Controllers
             }
             return Ok();
         }
+
         [HttpDelete("delete/{id}")]
-        public IActionResult Remove([FromRoute]int id)
+        public IActionResult Remove([FromRoute] int id)
         {
             var result = service.RemoveSupplier(id);
             if (!result)

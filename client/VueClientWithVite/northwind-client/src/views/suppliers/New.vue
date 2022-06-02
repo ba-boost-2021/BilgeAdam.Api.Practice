@@ -141,7 +141,7 @@
 <script>
 import axios from "axios";
 export default {
-  emits: [success],
+  emits: ["success"],
   data() {
     return {
       instance: null,

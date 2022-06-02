@@ -1,17 +1,23 @@
+using BilgeAdam.Api.Practice.Extensions;
 using BilgeAdam.Common;
 using BilgeAdam.Data.Context;
 using BilgeAdam.Services.Abstractions;
 using BilgeAdam.Services.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var settings = builder.Configuration.GetSection("Settings").Get<Settings>();
-//builder.Services.Configure<Settings>(builder.Configuration.GetSection("Settings"));
+builder.Services.Configure<Settings>(builder.Configuration.GetSection("Settings")); //di container'a register oldu
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddJwt(settings);
+builder.Services.AddAuthorization();
 //Db Context
 builder.Services.AddDbContext<NorthwindDbContext>(options =>
 {
@@ -33,6 +39,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors("all");
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();

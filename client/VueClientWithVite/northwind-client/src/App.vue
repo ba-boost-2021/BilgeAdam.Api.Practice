@@ -1,5 +1,6 @@
 <script setup>
 import AppSideBar from "./components/AppSideBar.vue";
+import AppNavBar from "./AppNavBar.vue";
 </script>
 
 <template>
@@ -8,6 +9,7 @@ import AppSideBar from "./components/AppSideBar.vue";
       <AppSideBar />
     </div>
     <div class="col">
+      <AppNavBar />
       <div class="container">
         <RouterView />
       </div>
